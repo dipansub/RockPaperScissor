@@ -1,0 +1,58 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+char generateComputerChoice() {
+    srand(time(0)); 
+    int randomChoice = rand() % 3; 
+
+    switch(randomChoice) {
+        case 0: return 'r'; 
+        case 1: return 'p';
+        default: return 's'; 
+    }
+}
+
+int decideWinner(char userChoice, char computerChoice) {
+    if (userChoice == computerChoice) return 0; 
+
+    if ((userChoice == 'r' && computerChoice == 's') || 
+        (userChoice == 'p' && computerChoice == 'r') || 
+        (userChoice == 's' && computerChoice == 'p')) {
+        return 1; 
+    } 
+    return -1; 
+}
+
+int main() {
+    char userChoice;
+
+    cout << "\n\nWelcome to the Rock-Paper-Scissors Game!\n";
+    cout << "Enter 'r' for ROCK, 'p' for PAPER, and 's' for SCISSORS: ";
+
+    while (true) {
+        cin >> userChoice;
+        if (userChoice == 'r' || userChoice == 'p' || userChoice == 's') {
+            break;
+        } else {
+            cout << "Invalid input! Please enter 'r', 'p', or 's': ";
+        }
+    }
+
+    char computerChoice = generateComputerChoice();
+    int outcome = decideWinner(userChoice, computerChoice);
+
+    if (outcome == 0) {
+        cout << "\nIt's a Draw!\n";
+    } else if (outcome == 1) {
+        cout << "\nYou Win! Congratulations!\n";
+    } else {
+        cout << "\nComputer Wins! Better luck next time.\n";
+    }
+
+    cout << "Your Move: " << userChoice << "\n";
+    cout << "Computer's Move: " << computerChoice << "\n";
+
+    return 0;
+}
